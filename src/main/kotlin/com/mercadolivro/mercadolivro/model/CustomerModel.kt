@@ -1,9 +1,24 @@
 package com.mercadolivro.mercadolivro.model
 
-data class CustomerModel(
-    var id: String? = null,
+import com.mercadolivro.mercadolivro.enums.CustomerStatus
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
 
+@Entity(name = "customer")
+data class CustomerModel(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Int? = null,
+
+    @Column
     var name: String,
 
-    var email: String
+    @Column
+    var email: String,
+
+    @Column
+    var status: CustomerStatus
 )

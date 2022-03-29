@@ -1,50 +1,44 @@
 package com.mercadolivro.mercadolivro.service
 
-import com.mercadolivro.mercadolivro.controller.request.PostCustomerRequest
-import com.mercadolivro.mercadolivro.controller.request.PutCustomerRequest
+import com.mercadolivro.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.mercadolivro.model.CustomerModel
+import com.mercadolivro.mercadolivro.repository.CustomerRepository
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
 
 @Service
-class CustomerService {
-    val customers = mutableListOf<CustomerModel>()
+class CustomerService(
+    val customerRepository: CustomerRepository,
+    val bookService: BookService
+) {
 
-    fun getCustomer(name: String?): List<CustomerModel> {
+    fun getAllCustomer(name: String?): List<CustomerModel> {
         name?.let {
-            return customers.filter { it.name.contains(name, true) }
+            return customerRepository.findByNameContaining(it)
         }
-        return customers
+        return customerRepository.findAll().toList()
     }
 
     fun create(customer: CustomerModel) {
-        val id = if(customers.isEmpty()){
-            1
-        }else{
-            customers.last().id!!.toInt() + 1
-        }.toString()
-
-        customer.id = id
-
-        customers.add(CustomerModel(id, customer.name, customer.email))
+        customerRepository.save(customer)
     }
 
-    fun getId(@PathVariable id: String): CustomerModel {
-        return customers.filter { it.id == id }.first()
+    fun getCustomerById(@PathVariable id: Int): CustomerModel {
+        return customerRepository.findById(id).get()
     }
 
     fun update(customer: CustomerModel) {
-        customers.filter { it.id == customer.id }.first().let {
-            it.name = customer.name
-            it.email = customer.email
+        if(!customerRepository.existsById(customer.id!!)){
+            throw java.lang.Exception()
         }
+        customerRepository.save(customer)
     }
-    fun delete(@PathVariable id: String) {
-        customers.filter { it.id == id }.first().let {
-            customers.removeIf{it.id == id}
-        }
+
+    fun delete(@PathVariable id: Int) {
+        val customer = getCustomerById(id)
+        bookService.deleteByCustomer(customer)
+        customer.status = CustomerStatus.INATIVO
+        customerRepository.save(customer)
     }
 
 }
