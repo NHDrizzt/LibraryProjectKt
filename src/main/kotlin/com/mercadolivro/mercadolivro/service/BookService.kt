@@ -4,17 +4,17 @@ import com.mercadolivro.mercadolivro.enums.BookStatus
 import com.mercadolivro.mercadolivro.model.BookModel
 import com.mercadolivro.mercadolivro.model.CustomerModel
 import com.mercadolivro.mercadolivro.repository.BookRepository
-import com.mercadolivro.mercadolivro.repository.CustomerRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.PathVariable
 
 @Service
 class BookService(
     val bookRepository: BookRepository
 ) {
 
-    fun getAllBooks() : List<BookModel> {
-        return bookRepository.findAll().toList()
+    fun getAllBooks(pageable: Pageable): Page<BookModel> {
+        return bookRepository.findAll(pageable)
     }
 
     fun create(book : BookModel) {
@@ -25,8 +25,8 @@ class BookService(
        return bookRepository.findById(id).get()
     }
 
-    fun findByActive(): List<BookModel> {
-        return bookRepository.findByStatus(BookStatus.ATIVO)
+    fun findByActive(pageable: Pageable): Page<BookModel> {
+        return bookRepository.findByStatus(BookStatus.ATIVO, pageable)
     }
 
     fun update(book: BookModel) {
