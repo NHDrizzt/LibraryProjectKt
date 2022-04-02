@@ -19,7 +19,6 @@ repositories {
 dependencies {
 
 	implementation("org.hibernate:hibernate-core:5.6.6.Final")
-	//implementation("org.flywaydb:flyway-core:8.5.4")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -27,6 +26,8 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("javax.persistence:javax.persistence-api:2.2")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("io.springfox:springfox-boot-starter:3.0.0")
+
 
 	runtimeOnly("mysql:mysql-connector-java:8.0.28")
 
