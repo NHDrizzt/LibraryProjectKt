@@ -1,0 +1,29 @@
+# Use root/example as user/password credentials
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.0
+
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mercadolivro
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data./var/lib/mysql
+    networks:
+      - mysql-compose-network
+
+  adminer:
+    image: adminer
+    container_name: adminer_container
+    ports:
+      - 8081:8080
+    networks:
+      - mysql-compose-network
+
+networks:
+  mysql-compose-network:
+    driver: bridge
