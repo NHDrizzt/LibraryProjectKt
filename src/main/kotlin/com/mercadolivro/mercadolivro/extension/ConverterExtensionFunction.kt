@@ -21,14 +21,16 @@ fun PostCustomerRequest.toCustomerModel(): CustomerModel {
     )
 }
 
-fun PutCustomerRequest.toCustomerModel(id: Int): CustomerModel {
+fun PutCustomerRequest.toCustomerModel(customer: CustomerModel): CustomerModel {
+    if(customer.status == CustomerStatus.INATIVO){
+        throw BadRequestException(Errors.ML1102.message.format(customer.status), Errors.ML1102.code)
+    }
     return CustomerModel(
-        id = id,
+        id = customer.id,
         name = this.name,
         email = this.email,
         status = CustomerStatus.ATIVO
-    )
-}
+    )}
 
 fun PostBookRequest.toBookModel(customer: CustomerModel): BookModel {
     return BookModel(

@@ -41,6 +41,7 @@ class CustomerService(
     fun delete(@PathVariable id: Int) {
         val customer = getCustomerById(id)
         customer.status = CustomerStatus.INATIVO
+
         bookService.deleteByCustomer(customer)
         customerRepository.save(customer)
     }

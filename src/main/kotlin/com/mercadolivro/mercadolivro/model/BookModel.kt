@@ -1,6 +1,7 @@
 package com.mercadolivro.mercadolivro.model
 
 import com.mercadolivro.mercadolivro.enums.BookStatus
+import com.mercadolivro.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.mercadolivro.enums.Errors
 import com.mercadolivro.mercadolivro.exceptions.BadRequestException
 import java.math.BigDecimal
@@ -45,7 +46,7 @@ data class BookModel(
     @Enumerated(EnumType.STRING)
     var status: BookStatus? = null
         set(value){
-            if(field == BookStatus.CANCELADO || field == BookStatus.DELETADO){
+            if(field == BookStatus.DELETADO){
                 throw BadRequestException(Errors.ML1002.message.format(field), Errors.ML1002.code)
             }
             field = value
