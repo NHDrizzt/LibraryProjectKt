@@ -1,6 +1,7 @@
 package com.mercadolivro.mercadolivro.service
 
 import com.mercadolivro.mercadolivro.enums.BookStatus
+import com.mercadolivro.mercadolivro.enums.Errors
 import com.mercadolivro.mercadolivro.exceptions.NotFoundException
 import com.mercadolivro.mercadolivro.model.BookModel
 import com.mercadolivro.mercadolivro.model.CustomerModel
@@ -23,7 +24,7 @@ class BookService(
     }
 
     fun findBookById(id: Int): BookModel {
-       return bookRepository.findById(id).orElseThrow{ NotFoundException("Book ${id} not exists", "ML-0001") }
+       return bookRepository.findById(id).orElseThrow{ NotFoundException(Errors.ML1001.message.format(id), Errors.ML1001.code) }
     }
 
     fun findByActive(pageable: Pageable): Page<BookModel> {
