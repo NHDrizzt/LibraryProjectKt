@@ -41,7 +41,7 @@ fun PostBookRequest.toBookModel(customer: CustomerModel): BookModel {
 
 fun PutBookRequest.toBookModel(previousBookValue: BookModel): BookModel {
     if(previousBookValue.status == BookStatus.DELETADO || previousBookValue.status == BookStatus.CANCELADO){
-        throw BadRequestException(Errors.ML1002.message.format(previousBookValue.id), Errors.ML1002.code)
+        throw BadRequestException(Errors.ML1002.message.format(previousBookValue.status), Errors.ML1002.code)
     }
 
     return BookModel(
