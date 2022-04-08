@@ -10,7 +10,7 @@ import org.springframework.web.context.request.WebRequest
 @ControllerAdvice
 class ExceptionHandler  {
     @ExceptionHandler(NotFoundException::class)
-    fun handler(ex: NotFoundException, request: WebRequest): ResponseEntity<ErrorResponse>{
+    fun NotFoundExceptionHandler(ex: NotFoundException, request: WebRequest): ResponseEntity<ErrorResponse>{
         val error = ErrorResponse(
             HttpStatus.NOT_FOUND.value(),
             ex.message,
@@ -18,6 +18,17 @@ class ExceptionHandler  {
             null
         )
         return ResponseEntity(error, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(BadRequestException::class)
+    fun BadRequestExceptionHandler(ex: BadRequestException, request: WebRequest): ResponseEntity<ErrorResponse>{
+        val error = ErrorResponse(
+            HttpStatus.BAD_REQUEST.value(),
+            ex.message,
+            ex.errorCode,
+            null
+        )
+        return ResponseEntity(error, HttpStatus.BAD_REQUEST)
     }
 
 }

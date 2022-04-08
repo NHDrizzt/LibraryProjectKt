@@ -8,6 +8,8 @@ import com.mercadolivro.mercadolivro.controller.response.BookResponse
 import com.mercadolivro.mercadolivro.controller.response.CustomerResponse
 import com.mercadolivro.mercadolivro.enums.BookStatus
 import com.mercadolivro.mercadolivro.enums.CustomerStatus
+import com.mercadolivro.mercadolivro.enums.Errors
+import com.mercadolivro.mercadolivro.exceptions.BadRequestException
 import com.mercadolivro.mercadolivro.model.BookModel
 import com.mercadolivro.mercadolivro.model.CustomerModel
 
@@ -39,7 +41,7 @@ fun PostBookRequest.toBookModel(customer: CustomerModel): BookModel {
 
 fun PutBookRequest.toBookModel(previousBookValue: BookModel): BookModel {
     if(previousBookValue.status == BookStatus.DELETADO || previousBookValue.status == BookStatus.CANCELADO){
-        throw Exception("Voce nao pode alterar um livro cancelado ou deletado")
+        throw BadRequestException(Errors.ML1002.message.format(previousBookValue.id), Errors.ML1002.code)
     }
 
     return BookModel(
