@@ -27,6 +27,7 @@ dependencies {
 	implementation("javax.persistence:javax.persistence-api:2.2")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("io.springfox:springfox-boot-starter:3.0.0")
+	implementation("org.springframework.boot:spring-boot-starter-validation:2.6.4")
 
 
 	runtimeOnly("mysql:mysql-connector-java:8.0.28")
