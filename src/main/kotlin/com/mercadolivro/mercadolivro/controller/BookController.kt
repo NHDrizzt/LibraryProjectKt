@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 
 @RestController
@@ -27,7 +28,7 @@ class BookController (
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody request: PostBookRequest) {
+    fun create(@RequestBody @Valid request: PostBookRequest) {
         val customer = customerService.getCustomerById(request.customerId)
         return bookService.create(request.toBookModel(customer))
     }
@@ -44,7 +45,7 @@ class BookController (
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun update(@PathVariable id: Int, @RequestBody book: PutBookRequest) {
+    fun update(@PathVariable id: Int, @RequestBody  book: PutBookRequest) {
         val bookSavedOnDatabase = bookService.findBookById(id)
         bookService.update(book.toBookModel(bookSavedOnDatabase))
     }
