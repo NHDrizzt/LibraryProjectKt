@@ -1,14 +1,19 @@
 package com.mercadolivro.mercadolivro.service
 
+import com.mercadolivro.mercadolivro.controller.mapper.PurchaseMapper
 import com.mercadolivro.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.mercadolivro.enums.Errors
 import com.mercadolivro.mercadolivro.exceptions.NotFoundException
+import com.mercadolivro.mercadolivro.model.BookModel
 import com.mercadolivro.mercadolivro.model.CustomerModel
+import com.mercadolivro.mercadolivro.model.PurchaseModel
 import com.mercadolivro.mercadolivro.repository.CustomerRepository
+import com.mercadolivro.mercadolivro.repository.PurchaseRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.PathVariable
+import java.awt.print.Book
 
 @Service
 class CustomerService(

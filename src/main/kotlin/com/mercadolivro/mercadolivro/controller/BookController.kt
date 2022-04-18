@@ -55,9 +55,4 @@ class BookController (
     fun delete(@PathVariable id:Int) {
         bookService.delete(id)
     }
-
-
-
-
-
 }

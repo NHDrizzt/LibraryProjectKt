@@ -18,6 +18,9 @@ class BookService(
     fun getAllBooks(pageable: Pageable): Page<BookModel> {
         return bookRepository.findAll(pageable)
     }
+    fun getAllNotPageable(): MutableList<BookModel> {
+        return bookRepository.findAll().toMutableList()
+    }
 
     fun create(book : BookModel) {
         bookRepository.save(book)
