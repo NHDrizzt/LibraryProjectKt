@@ -10,7 +10,6 @@ class PostBookRequest (
     @field: NotEmpty
     var name: String,
 
-    @field:Email
     var price: BigDecimal,
 
     @JsonAlias("customer_id")
