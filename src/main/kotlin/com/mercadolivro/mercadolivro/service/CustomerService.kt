@@ -3,6 +3,7 @@ package com.mercadolivro.mercadolivro.service
 import com.mercadolivro.mercadolivro.controller.mapper.PurchaseMapper
 import com.mercadolivro.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.mercadolivro.enums.Errors
+import com.mercadolivro.mercadolivro.enums.Profile
 import com.mercadolivro.mercadolivro.exceptions.NotFoundException
 import com.mercadolivro.mercadolivro.model.BookModel
 import com.mercadolivro.mercadolivro.model.CustomerModel
@@ -29,7 +30,10 @@ class CustomerService(
     }
 
     fun create(customer: CustomerModel) {
-        customerRepository.save(customer)
+        val customerCopy = customer.copy(
+            roles = setOf(Profile.CUSTOMER)
+        )
+        customerRepository.save(customerCopy)
     }
 
     fun getCustomerById(@PathVariable id: Int): CustomerModel {

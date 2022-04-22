@@ -3,12 +3,9 @@ package com.mercadolivro.mercadolivro.model
 import com.mercadolivro.mercadolivro.enums.BookStatus
 import com.mercadolivro.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.mercadolivro.enums.Errors
+import com.mercadolivro.mercadolivro.enums.Profile
 import com.mercadolivro.mercadolivro.exceptions.BadRequestException
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity(name = "customer")
 data class CustomerModel(
@@ -22,13 +19,25 @@ data class CustomerModel(
     @Column
     var email: String,
 
+    @Column
+    var password: String,
+
+
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = Profile::class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "customer_roles", joinColumns = [JoinColumn(name = "customer_id")])
+    var roles: Set<Profile> = setOf()
+
 )
 {
     constructor(
         id: Int? = null,
         name: String,
         email: String,
-        status: CustomerStatus?): this(id, name, email){
+        password: String,
+        status: CustomerStatus?): this(id, name, email, password){
             this.status = status
         }
     @Column
