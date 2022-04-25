@@ -35,8 +35,10 @@ class CustomerService(
     fun create(customer: CustomerModel) {
         val customerCopy = customer.copy(
             roles = setOf(Profile.CUSTOMER),
-            password = bCrypt.encode(customer.password)
+            password = bCrypt.encode(customer.password),
+
         )
+        customerCopy.status = CustomerStatus.ATIVO
         customerRepository.save(customerCopy)
     }
 
